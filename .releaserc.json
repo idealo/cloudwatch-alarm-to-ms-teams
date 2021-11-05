@@ -7,7 +7,7 @@
     ["@semantic-release/exec", {
       "prepareCmd": "sam build && sam package --template-file template.yaml --output-template-file packaged.yaml --s3-bucket service-catalog-hub-sam-artifacts",
       "publishCmd": "sam publish --semantic-version ${nextRelease.version} --region eu-central-1 --template packaged.yaml",
-      "successCmd": "aws serverlessrepo put-application-policy --application-id arn:aws:serverlessrepo:eu-central-1:${\"$\\\\{AWS_ACCOUNT_ID\\\\}\"}:applications/cloudwatch-alarm-to-ms-teams --statements Principals='*',Actions=Deploy"
+      "successCmd": "aws serverlessrepo put-application-policy --application-id arn:aws:serverlessrepo:eu-central-1:$(aws sts get-caller-identity | jq -r '.Account'):applications/cloudwatch-alarm-to-ms-teams --statements Principals='*',Actions=Deploy"
     }],
     "@semantic-release/github"
   ]
