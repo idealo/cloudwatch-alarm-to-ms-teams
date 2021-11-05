@@ -1,0 +1,47 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: >-
+  cloudwatch-alarm-to-ms-teams
+
+  Send CloudWatch Alarms to Microsoft Teams via an SNS topic.
+
+Metadata:
+  AWS::ServerlessRepo::Application:
+    Name: cloudwatch-alarm-to-ms-teams
+    Description: Send CloudWatch Alarms to Microsoft Teams via an SNS topic.
+    Author: idealo Internet GmbH
+    Labels: [ 'cloudwatch','teams','notification' ]
+    HomePageUrl: https://github.com/idealo/cloudwatch-alarm-to-ms-teams
+    ReadmeUrl: README.md
+    SemanticVersion: 0.0.1
+    SourceCodeUrl: https://github.com/idealo/cloudwatch-alarm-to-ms-teams
+
+Parameters:
+  AlarmTopicArn:
+    Type: String
+    Description: ARN of the SNS topic that receives the CloudWatch Alarms you want to forward to MS Teams.
+  MSTeamsWebhookUrl:
+    Type: String
+    Description: The URL of the MS Teams webhook to which you want to send alarm notifications.
+
+Transform:
+- AWS::Serverless-2016-10-31
+
+Resources:
+  ForwardToTeamsFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Description: Function for forwarding CloudWatch Alarms to Microsoft Teams.
+      Handler: dist/handlers/forward-to-teams.handler
+      Runtime: nodejs14.x
+      Architectures:
+        - arm64
+      MemorySize: 128
+      Timeout: 10
+      Environment:
+        Variables:
+          TEAMS_WEBHOOK_URL: !Ref MSTeamsWebhookUrl
+      Events:
+        AlarmNotification:
+          Type: SNS
+          Properties:
+            Topic: !Ref AlarmTopicArn

@@ -1,0 +1,86 @@
+name: CI/CD
+on:
+  push:
+    branches:
+      - main
+      - '[0-9]+.x'
+    paths:
+      - src/**
+      - package-lock.json
+      - template.yaml
+      - .github/workflows/node-ci.yml
+
+permissions:
+  id-token: write
+  contents: write
+  pull-requests: read
+
+jobs:
+  build:
+    name: Build & Release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+
+      - name: Setup NodeJS
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Cache Node.js modules
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm # npm cache files are stored in `~/.npm` on Linux/macOS
+          key: ${{ runner.OS }}-node-14-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.OS }}-node-14
+            ${{ runner.OS }}-
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build project
+        run: npm run build
+
+      - name: Lint the code
+        run: npm run lint:json
+
+      - name: Run unit tests
+        run: npm run test:cov
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@e21f7333e801ca751f058cc52de17f0ee6e1da6f
+        with:
+          aws-region: eu-central-1
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/ServerlessAppManagementAccess
+          role-duration-seconds: 1800
+
+      - name: Validate template
+        run: sam validate
+
+      - name: Create new release
+        uses: cycjimmy/semantic-release-action@v2
+        with:
+          extra_plugins: |
+            @semantic-release/exec
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+
+      - name: Retrieve package version
+        id: package-version
+        run: echo "::set-output name=version::$(jq -r '.version' package.json)"
+
+      - name: Rewrite ESLint report for SonarCloud
+        run: sed -i "s+${GITHUB_WORKSPACE}+/github/workspace+g" eslint-report.json
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@v1.6
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          args: >
+            -Dsonar.projectVersion=${{ steps.package-version.outputs.version }}
