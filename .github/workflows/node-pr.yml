@@ -23,15 +23,7 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: '14'
-
-      - name: Cache Node.js modules
-        uses: actions/cache@v2
-        with:
-          path: ~/.npm # npm cache files are stored in `~/.npm` on Linux/macOS
-          key: ${{ runner.OS }}-node-14-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.OS }}-node-14
-            ${{ runner.OS }}-
+          cache: npm
 
       - name: Install dependencies
         run: npm ci
@@ -70,6 +62,7 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: '14'
+          cache: npm
 
       - name: Cache Node.js modules
         uses: actions/cache@v2
