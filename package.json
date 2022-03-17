@@ -25,7 +25,7 @@
     },
     "devDependencies": {
         "@commitlint/cli": "^16.2.1",
-        "@commitlint/config-conventional": "^15.0.0",
+        "@commitlint/config-conventional": "^16.2.1",
         "@tsconfig/node14": "^1.0.1",
         "@types/aws-lambda": "^8.10.92",
         "@types/jest": "^27.0.3",
