@@ -34,7 +34,7 @@ Resources:
     Properties:
       Description: Function for forwarding CloudWatch Alarms to Microsoft Teams.
       Handler: dist/handlers/forward-to-teams.handler
-      Runtime: nodejs14.x
+      Runtime: nodejs16.x
       MemorySize: 128
       Timeout: 10
       Environment:
