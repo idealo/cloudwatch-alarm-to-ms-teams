@@ -39,7 +39,7 @@ jobs:
 
       - name: Retrieve package version
         id: package-version
-        run: echo "::set-output name=version::$(jq -r '.version' package.json)"
+        run: echo "version=$(jq -r '.version' package.json)" >> $GITHUB_OUTPUT
 
       - name: Rewrite ESLint report for SonarCloud
         run: sed -i "s+${GITHUB_WORKSPACE}+/github/workspace+g" eslint-report.json
