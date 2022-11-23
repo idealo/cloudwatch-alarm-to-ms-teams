@@ -3,3 +3,4 @@ dist
 .aws-sam
 samconfig.toml
 sonar-report.xml
+.idea
