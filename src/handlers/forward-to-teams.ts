@@ -27,137 +27,135 @@ export const handler: SNSHandler = async (event) => {
 
     const stateChangeTime = parseISO(message.StateChangeTime);
 
-    await webhook.send(
-      JSON.stringify({
-        type: 'message',
-        attachments: [
-          {
-            contentType: 'application/vnd.microsoft.card.adaptive',
-            contentUrl: null,
-            content: {
-              $schema: 'http://adaptivecards.io/schemas/adaptive-card.json',
-              type: 'AdaptiveCard',
-              version: '1.3',
-              body: [
-                {
-                  type: 'Container',
-                  padding: 'None',
-                  items: [
-                    {
-                      type: 'TextBlock',
-                      wrap: true,
-                      size: 'Large',
-                      color: getHeadingColor(message.NewStateValue),
-                      text: `${getEmoji(message.NewStateValue)} ${
-                        message.NewStateValue
-                      }: ${message.AlarmName}`,
-                    },
-                  ],
-                },
-                {
-                  type: 'Container',
-                  items: [
-                    {
-                      type: 'TextBlock',
-                      text: message.AlarmDescription,
-                      wrap: true,
-                    },
-                    {
-                      type: 'TextBlock',
-                      text: message.NewStateReason,
-                      wrap: true,
-                    },
-                  ],
-                  isVisible: false,
-                  id: 'alarm-details',
-                },
-                {
-                  type: 'Container',
-                  padding: 'None',
-                  items: [
-                    {
-                      type: 'ColumnSet',
-                      columns: [
-                        {
-                          type: 'Column',
-                          width: 'stretch',
-                          items: [
-                            {
-                              type: 'TextBlock',
-                              text: 'Account',
-                              wrap: true,
-                              isSubtle: true,
-                              weight: 'Bolder',
-                            },
-                            {
-                              type: 'TextBlock',
-                              wrap: true,
-                              spacing: 'Small',
-                              text: message.AWSAccountId,
-                            },
-                          ],
-                        },
-                        {
-                          type: 'Column',
-                          width: 'stretch',
-                          items: [
-                            {
-                              type: 'TextBlock',
-                              text: 'Region',
-                              wrap: true,
-                              isSubtle: true,
-                              weight: 'Bolder',
-                            },
-                            {
-                              type: 'TextBlock',
-                              text: message.Region,
-                              wrap: true,
-                              spacing: 'Small',
-                            },
-                          ],
-                        },
-                        {
-                          type: 'Column',
-                          width: 'stretch',
-                          items: [
-                            {
-                              type: 'TextBlock',
-                              text: 'Time',
-                              wrap: true,
-                              weight: 'Bolder',
-                              isSubtle: true,
-                            },
-                            {
-                              type: 'TextBlock',
-                              text: `{{TIME(${formatISO(stateChangeTime)})}}`,
-                              wrap: true,
-                              spacing: 'Small',
-                            },
-                          ],
-                        },
-                      ],
-                    },
-                  ],
-                },
-              ],
-              padding: 'None',
-              actions: [
-                {
-                  type: 'Action.ToggleVisibility',
-                  title: 'Show Details',
-                  targetElements: ['alarm-details'],
-                },
-                {
-                  type: 'Action.OpenUrl',
-                  title: 'View in CloudWatch',
-                  url: getAlarmLink(message.AlarmArn),
-                },
-              ],
-            },
+    await webhook.send({
+      type: 'message',
+      attachments: [
+        {
+          contentType: 'application/vnd.microsoft.card.adaptive',
+          contentUrl: null,
+          content: {
+            $schema: 'http://adaptivecards.io/schemas/adaptive-card.json',
+            type: 'AdaptiveCard',
+            version: '1.3',
+            body: [
+              {
+                type: 'Container',
+                padding: 'None',
+                items: [
+                  {
+                    type: 'TextBlock',
+                    wrap: true,
+                    size: 'Large',
+                    color: getHeadingColor(message.NewStateValue),
+                    text: `${getEmoji(message.NewStateValue)} ${
+                      message.NewStateValue
+                    }: ${message.AlarmName}`,
+                  },
+                ],
+              },
+              {
+                type: 'Container',
+                items: [
+                  {
+                    type: 'TextBlock',
+                    text: message.AlarmDescription,
+                    wrap: true,
+                  },
+                  {
+                    type: 'TextBlock',
+                    text: message.NewStateReason,
+                    wrap: true,
+                  },
+                ],
+                isVisible: false,
+                id: 'alarm-details',
+              },
+              {
+                type: 'Container',
+                padding: 'None',
+                items: [
+                  {
+                    type: 'ColumnSet',
+                    columns: [
+                      {
+                        type: 'Column',
+                        width: 'stretch',
+                        items: [
+                          {
+                            type: 'TextBlock',
+                            text: 'Account',
+                            wrap: true,
+                            isSubtle: true,
+                            weight: 'Bolder',
+                          },
+                          {
+                            type: 'TextBlock',
+                            wrap: true,
+                            spacing: 'Small',
+                            text: message.AWSAccountId,
+                          },
+                        ],
+                      },
+                      {
+                        type: 'Column',
+                        width: 'stretch',
+                        items: [
+                          {
+                            type: 'TextBlock',
+                            text: 'Region',
+                            wrap: true,
+                            isSubtle: true,
+                            weight: 'Bolder',
+                          },
+                          {
+                            type: 'TextBlock',
+                            text: message.Region,
+                            wrap: true,
+                            spacing: 'Small',
+                          },
+                        ],
+                      },
+                      {
+                        type: 'Column',
+                        width: 'stretch',
+                        items: [
+                          {
+                            type: 'TextBlock',
+                            text: 'Time',
+                            wrap: true,
+                            weight: 'Bolder',
+                            isSubtle: true,
+                          },
+                          {
+                            type: 'TextBlock',
+                            text: `{{TIME(${formatISO(stateChangeTime)})}}`,
+                            wrap: true,
+                            spacing: 'Small',
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+            padding: 'None',
+            actions: [
+              {
+                type: 'Action.ToggleVisibility',
+                title: 'Show Details',
+                targetElements: ['alarm-details'],
+              },
+              {
+                type: 'Action.OpenUrl',
+                title: 'View in CloudWatch',
+                url: getAlarmLink(message.AlarmArn),
+              },
+            ],
           },
-        ],
-      })
-    );
+        },
+      ],
+    });
   }
 };
 
