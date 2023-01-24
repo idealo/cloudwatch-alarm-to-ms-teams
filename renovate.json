@@ -1,6 +1,21 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "local>idealo/cst-renovate-config"
-  ]
+    "config:base",
+    ":dependencyDashboard"
+  ],
+  "packageRules": [
+    {
+      "matchUpdateTypes": [
+        "minor",
+        "patch",
+        "pin",
+        "digest"
+      ],
+      "automerge": true
+    }
+  ],
+  "major": {
+    "dependencyDashboardApproval": true
+  }
 }
