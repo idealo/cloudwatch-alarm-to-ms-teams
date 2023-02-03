@@ -46,7 +46,6 @@ jobs:
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@v1.8
-        if: github.event.pull_request.head.repo.full_name == github.repository'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
@@ -55,7 +54,6 @@ jobs:
             -Dsonar.projectVersion=${{ steps.package-version.outputs.version }}
   sam-test:
     runs-on: ubuntu-latest
-    if: github.event.pull_request.head.repo.full_name == github.repository'
     steps:
       - uses: actions/checkout@v3
 
