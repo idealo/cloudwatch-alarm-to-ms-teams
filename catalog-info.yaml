@@ -1,0 +1,20 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: cloudwatch-alarm-to-ms-teams
+  description: Send CloudWatch Alarms to Microsoft Teams via an SNS topic.
+  annotations:
+    github.com/project-slug: idealo/cloudwatch-alarm-to-ms-teams
+    github.com/team-slug: idealo/cloud-shuttle
+  tags:
+    - microsoft-teams
+    - cloudwatch
+    - serverless
+  links:
+    - url: https://serverlessrepo.aws.amazon.com/applications/eu-central-1/482117739457/cloudwatch-alarm-to-ms-teams
+      title: Go to aws Serverless Application Repository
+      icon: cloud
+spec:
+  type: service
+  lifecycle: production
+  owner: group:cloud-shuttle
