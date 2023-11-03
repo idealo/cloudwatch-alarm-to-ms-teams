@@ -14,44 +14,10 @@ permissions:
 
 jobs:
   unit-test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
-
-      - uses: actions/setup-node@v3
-        with:
-          node-version: '16'
-          cache: npm
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build project
-        run: npm run build
-
-      - name: Lint the code
-        run: npm run lint:json
-
-      - name: Run unit tests
-        run: npm run test:cov
-
-      - name: Retrieve package version
-        id: package-version
-        run: echo "version=$(jq -r '.version' package.json)" >> $GITHUB_OUTPUT
-
-      - name: Rewrite ESLint report for SonarCloud
-        run: sed -i "s+${GITHUB_WORKSPACE}+/github/workspace+g" eslint-report.json
-
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@v1.9
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        with:
-          args: >
-            -Dsonar.projectVersion=${{ steps.package-version.outputs.version }}
+    uses: idealo/cst-github-workflows/.github/workflows/node-unit-test.yaml@main
+    with:
+      node-version: '16'
+    secrets: inherit
   sam-test:
     runs-on: ubuntu-latest
     steps:
