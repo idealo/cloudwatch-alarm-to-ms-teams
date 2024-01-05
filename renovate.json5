@@ -2,7 +2,11 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:base",
-    ":dependencyDashboard"
+    ":dependencyDashboard",
+    ":rebaseStalePrs",  // keep PRs updated
+    ":maintainLockFilesDisabled", // do not update package-lock.json without package.json
+    ":pinVersions", // use fixed version and not ranges
+    ":semanticCommitTypeAll(fix)"
   ],
   "packageRules": [
     {
