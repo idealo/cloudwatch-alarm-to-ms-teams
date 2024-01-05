@@ -4,3 +4,6 @@ dist
 samconfig.toml
 sonar-report.xml
 .idea
+.cdk.staging
+cdk.out
+cdk.context.json
