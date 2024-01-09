@@ -5,16 +5,17 @@ import {
   isCloudwatchAlarmNotification,
 } from './message-inputs';
 import * as arnParser from '@aws-sdk/util-arn-parser';
+import { ARN } from '@aws-sdk/util-arn-parser';
 import * as log from 'lambda-log';
 import { formatISO, parseISO } from 'date-fns';
 
 export const handler: SNSHandler = async (event) => {
   const webhookUrl = process.env.TEAMS_WEBHOOK_URL;
-  if (webhookUrl == undefined) {
+  if (webhookUrl === undefined) {
     throw new Error('TEAMS_WEBHOOK_URL must be defined');
   }
 
-  console.log(JSON.stringify(event));
+  log.info(JSON.stringify(event));
 
   const webhook = new IncomingWebhook(webhookUrl);
 
@@ -163,7 +164,11 @@ function getAlarmLink(alarmArn: string) {
   const arn = arnParser.parse(alarmArn);
   return `https://${arn.region}.console.aws.amazon.com/cloudwatch/home?region=${
     arn.region
-  }#s=Alarms&alarm=${arn.resource.split(':')[1]}`;
+  }#alarmsV2:alarm/${encodeAlarmName(arn)}`;
+}
+
+function encodeAlarmName(arn: ARN): string {
+  return encodeURIComponent(arn.resource.split(':')[1]);
 }
 
 function getHeadingColor(state: CloudwatchAlarmState): string {
