@@ -5,7 +5,7 @@ metadata:
   description: Send CloudWatch Alarms to Microsoft Teams via an SNS topic.
   annotations:
     github.com/project-slug: idealo/cloudwatch-alarm-to-ms-teams
-    github.com/team-slug: idealo/cloud-shuttle
+    github.com/team-slug: idealo/engineering-experience
   tags:
     - microsoft-teams
     - cloudwatch
@@ -17,4 +17,4 @@ metadata:
 spec:
   type: service
   lifecycle: production
-  owner: group:cloud-shuttle
+  owner: group:engineering-experience
