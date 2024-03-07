@@ -16,6 +16,6 @@ metadata:
       icon: cloud
 spec:
   type: service
-  system: monitoring
+  system: alerting
   lifecycle: production
   owner: group:observability
