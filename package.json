@@ -21,7 +21,7 @@
         "@aws-sdk/util-arn-parser": "3.465.0",
         "date-fns": "3.2.0",
         "lambda-log": "3.1.0",
-        "ms-teams-webhook": "2.0.2"
+        "ms-teams-webhook": "2.0.3"
     },
     "devDependencies": {
         "@commitlint/cli": "18.4.4",
