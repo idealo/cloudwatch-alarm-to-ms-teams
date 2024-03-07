@@ -19,7 +19,7 @@
     },
     "dependencies": {
         "@aws-sdk/util-arn-parser": "3.465.0",
-        "date-fns": "3.2.0",
+        "date-fns": "3.3.1",
         "lambda-log": "3.1.0",
         "ms-teams-webhook": "2.0.3"
     },
