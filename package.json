@@ -24,8 +24,8 @@
         "ms-teams-webhook": "2.0.3"
     },
     "devDependencies": {
-        "@commitlint/cli": "19.0.3",
-        "@commitlint/config-conventional": "19.0.3",
+        "@commitlint/cli": "19.1.0",
+        "@commitlint/config-conventional": "19.1.0",
         "@tsconfig/node20": "20.1.2",
         "@types/aws-lambda": "8.10.136",
         "@types/jest": "29.5.12",
