@@ -10,7 +10,7 @@
     "@types/node": "20.11.30",
     "aws-cdk": "2.131.0",
     "ts-node": "10.9.2",
-    "typescript": "5.4.2",
+    "typescript": "5.4.3",
     "esbuild": "0.20.2"
   },
   "devDependencies": {
