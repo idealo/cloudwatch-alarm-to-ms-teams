@@ -30,7 +30,7 @@
         "@types/aws-lambda": "8.10.136",
         "@types/jest": "29.5.12",
         "@types/lambda-log": "3.0.3",
-        "@types/node": "20.11.30",
+        "@types/node": "20.12.2",
         "@typescript-eslint/eslint-plugin": "7.4.0",
         "@typescript-eslint/parser": "7.4.0",
         "eslint": "8.57.0",
