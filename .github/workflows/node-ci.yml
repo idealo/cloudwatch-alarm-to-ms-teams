@@ -55,7 +55,7 @@ jobs:
         run: sam validate
 
       - name: Create new release
-        uses: cycjimmy/semantic-release-action@v3
+        uses: cycjimmy/semantic-release-action@v4
         with:
           extra_plugins: |
             @semantic-release/exec
