@@ -7,7 +7,7 @@
     "cdk-destroy": "npx cdk -a 'npx ts-node --prefer-ts-exts ./src/cdk.ts' destroy -c webhook-url=https//webhook-only-provided-when-deploying"
   },
   "dependencies": {
-    "@types/node": "20.12.10",
+    "@types/node": "20.12.11",
     "aws-cdk": "2.140.0",
     "ts-node": "10.9.2",
     "typescript": "5.4.5",
