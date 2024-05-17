@@ -27,7 +27,7 @@
         "@commitlint/cli": "19.3.0",
         "@commitlint/config-conventional": "19.2.2",
         "@tsconfig/node20": "20.1.4",
-        "@types/aws-lambda": "8.10.137",
+        "@types/aws-lambda": "8.10.138",
         "@types/jest": "29.5.12",
         "@types/lambda-log": "3.0.3",
         "@types/node": "20.12.12",
