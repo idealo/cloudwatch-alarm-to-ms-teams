@@ -8,6 +8,7 @@
     ":pinVersions", // use fixed version and not ranges
     ":semanticCommitTypeAll(fix)"
   ],
+  "schedule": ["every 2 weeks"],
   "packageRules": [
     {
       "matchUpdateTypes": [
